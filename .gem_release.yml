@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_tracking/version.rb'
+  message: Bump SolidusTracking to %{version}
+  tag: true
