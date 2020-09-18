@@ -3,6 +3,7 @@
 RSpec.configure do |config|
   config.before do
     SolidusTracking.configure do |c|
+      c.test_mode = false
       c.variant_url_builder = proc do |variant|
         "https://example.com/products/#{variant.product.slug}"
       end
