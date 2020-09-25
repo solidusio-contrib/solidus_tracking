@@ -6,8 +6,11 @@ This extension provides a data tracking platform (think [Segment](https://segmen
 on-premise) for your Solidus store.
 
 It has out-of-the-box support for the most common eCommerce events, as well as for delivering
-transactional emails through a marketing service such as
-[Klaviyo](https://github.com/solidusio-contrib/solidus_klaviyo) or MailChimp. 
+transactional emails through an external service.
+
+| Service | Extension |
+| ------- | --------- |
+| [Klaviyo](https://klaviyo.com) | [solidus_klaviyo](https://github.com/solidusio-contrib/solidus_klaviyo) |
 
 ## Installation
 
