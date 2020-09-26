@@ -53,7 +53,7 @@ module SolidusTracking
 
     def track_later(event_name, event_payload = {})
       configuration.event_klass!(event_name) # validate event name
-      TrackEventJob.perform_later(event_name, event_payload)
+      SolidusTracking::TrackEventJob.perform_later(event_name, event_payload)
     end
 
     private
