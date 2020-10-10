@@ -57,7 +57,7 @@ RSpec.describe SolidusTracking::Event::CancelledOrder do
       event = described_class.new(order: order)
 
       expect(event.properties).to include(
-        '$event_id' => order.id.to_s,
+        '$event_id' => order.number,
         '$value' => order.total,
       )
     end

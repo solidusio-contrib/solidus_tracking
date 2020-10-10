@@ -57,7 +57,7 @@ RSpec.describe SolidusTracking::Event::OrderedProduct do
       event = described_class.new(line_item: line_item)
 
       expect(event.properties).to include(
-        '$event_id' => line_item.id.to_s,
+        '$event_id' => "#{line_item.order.number}-#{line_item.id}",
         '$value' => line_item.amount,
       )
     end
