@@ -98,4 +98,16 @@ RSpec.describe Spree::Order do
       end
     end
   end
+
+  describe 'shipping an order' do
+    it 'tracks the Fulfilled Order event' do
+      order = create(:order_ready_to_ship)
+      order.shipments.each(&:ship!)
+
+      expect(SolidusTracking::TrackEventJob).to have_been_enqueued.with(
+        'fulfilled_order',
+        order: order,
+      )
+    end
+  end
 end

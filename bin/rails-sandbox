@@ -5,10 +5,12 @@ app_root = 'sandbox'
 unless File.exist? "#{app_root}/bin/rails"
   warn 'Creating the sandbox app...'
   Dir.chdir "#{__dir__}/.." do
+    # rubocop:disable Style/RedundantBegin
     system "#{__dir__}/sandbox" or begin
       warn 'Automatic creation of the sandbox app failed'
       exit 1
     end
+    # rubocop:enable Style/RedundantBegin
   end
 end
 

@@ -39,6 +39,7 @@ The extension will track the following events:
 - `Started Checkout`: when an order transitions from the `cart` state to `address`.
 - `Placed Order`: when an order is finalized.
 - `Ordered Product`: for each item in a finalized order.
+- `Fulfilled Order`: when all of an order's shipments are shipped.
 - `Cancelled Order`: when an order is cancelled.
 - `Created Account`: when a user is created.
 - `Reset Password`: when a user requests a password reset.
@@ -124,6 +125,7 @@ This will disable the following emails:
 - Order confirmation
 - Order cancellation
 - Password reset
+- Carton shipped
 
 You'll have to re-implement the emails with a tracker.
 
