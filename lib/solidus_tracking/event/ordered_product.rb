@@ -17,7 +17,7 @@ module SolidusTracking
 
       def properties
         Serializer::LineItem.serialize(line_item).merge(
-          '$event_id' => line_item.id.to_s,
+          '$event_id' => "#{line_item.order.number}-#{line_item.id}",
           '$value' => line_item.amount,
         )
       end

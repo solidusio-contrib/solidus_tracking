@@ -15,7 +15,7 @@ module SolidusTracking
 
       def properties
         Serializer::User.serialize(user).merge(
-          '$event_id' => user.id.to_s,
+          '$event_id' => "#{user.id}-#{user.created_at.to_i}",
         )
       end
 

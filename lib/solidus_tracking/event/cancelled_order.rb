@@ -15,7 +15,7 @@ module SolidusTracking
 
       def properties
         Serializer::Order.serialize(order).merge(
-          '$event_id' => order.id.to_s,
+          '$event_id' => order.number,
           '$value' => order.total,
         )
       end
