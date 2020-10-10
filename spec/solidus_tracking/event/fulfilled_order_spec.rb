@@ -71,7 +71,7 @@ RSpec.describe SolidusTracking::Event::FulfilledOrder do
 
       event = described_class.new(order: order)
 
-      expect(event.time).to eq(shipment1.shipped_at)
+      expect(event.time).to eq(shipment1.reload.shipped_at)
     end
   end
 end
