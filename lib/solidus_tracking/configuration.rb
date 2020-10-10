@@ -23,6 +23,7 @@ module SolidusTracking
         'cancelled_order' => SolidusTracking::Event::CancelledOrder,
         'reset_password' => SolidusTracking::Event::ResetPassword,
         'created_account' => SolidusTracking::Event::CreatedAccount,
+        'fulfilled_order' => SolidusTracking::Event::FulfilledOrder,
       }
     end
 
