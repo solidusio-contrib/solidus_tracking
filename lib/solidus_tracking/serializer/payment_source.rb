@@ -11,7 +11,7 @@ module SolidusTracking
         return unless source.is_a?(::Spree::CreditCard)
 
         {
-          'Type' => source.class,
+          'Type' => source.class.to_s,
           'CcType' => source.cc_type,
           'Month' => source.month,
           'Year' => source.year,
