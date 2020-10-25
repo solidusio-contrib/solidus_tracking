@@ -3,6 +3,8 @@
 module SolidusTracking
   module Event
     class FulfilledOrder < Base
+      self.payload_serializer = '::SolidusTracking::Serializer::Order'
+
       def name
         'Fulfilled Order'
       end
@@ -10,11 +12,11 @@ module SolidusTracking
       delegate :email, to: :order
 
       def customer_properties
-        Serializer::CustomerProperties.serialize(order.user || order.email)
+        self.class.customer_properties_serializer.serialize(order.user || order.email)
       end
 
       def properties
-        Serializer::Order.serialize(order).merge(
+        self.class.payload_serializer.serialize(order).merge(
           '$event_id' => order.number,
           '$value' => order.total,
         )
