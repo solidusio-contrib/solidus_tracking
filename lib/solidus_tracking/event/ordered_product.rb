@@ -3,6 +3,8 @@
 module SolidusTracking
   module Event
     class OrderedProduct < Base
+      self.payload_serializer = '::SolidusTracking::Serializer::LineItem'
+
       def name
         'Ordered Product'
       end
@@ -12,11 +14,11 @@ module SolidusTracking
       end
 
       def customer_properties
-        Serializer::CustomerProperties.serialize(line_item.order.user || line_item.order.email)
+        self.class.customer_properties_serializer.serialize(line_item.order.user || line_item.order.email)
       end
 
       def properties
-        Serializer::LineItem.serialize(line_item).merge(
+        self.class.payload_serializer.serialize(line_item).merge(
           '$event_id' => "#{line_item.order.number}-#{line_item.id}",
           '$value' => line_item.amount,
         )

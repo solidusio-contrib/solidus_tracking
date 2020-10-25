@@ -55,6 +55,8 @@ event class and implementing the required methods:
 module MyApp
   module Events
     class SubscribedToNewsletter < SolidusTracking::Event::Base
+      self.payload_serializer = 'MyApp::Serializers::User'
+
       def name
         'SubscribedToNewsletter'
       end
@@ -64,14 +66,11 @@ module MyApp
       end
 
       def customer_properties
-        SolidusTracking::Serializer::Customer.serialize(user)
+        self.class.customer_properties_serializer.serialize(user)
       end
 
       def properties
-        {
-          '$event_id' => user.id.to_s,
-          '...' => '...',
-        }
+        self.class.payload_serializer.serialize(user)
       end
 
       def time
@@ -88,8 +87,30 @@ module MyApp
 end
 ```
 
-Once you have created the class, the next step is to register your custom event when initializing
-the extension:
+As you can see, you will also have to create a serializer for your users:
+
+```ruby
+module MyApp
+  module Serializers
+    class UserSerializer < SolidusTracking::Serializer::Base
+      def user
+        object
+      end
+
+      def as_json(_options = {})
+        {
+          'FirstName' => user.first_name,
+          'LastName' => user.last_name,
+          # ...
+        }
+      end
+    end
+  end
+end
+```
+
+Once you have created the event and serializer, the next step is to register your custom event when
+initializing the extension:
 
 ```ruby
 # config/initializers/solidus_tracking.rb
@@ -105,6 +126,32 @@ SolidusTracking.track_later('subscribed_to_newsletter', user: user)
 ```
 
 *NOTE:* You can follow the same exact pattern to override the built-in events.
+
+### Changing the serializers for built-in events
+
+If you need to change the customer properties serializer or the payload serializer for one or more
+events, there's no need to monkey-patch or override them. You can simply set 
+`customer_properties_serializer` and/or `payload_serializer` in an initializer:
+
+```ruby
+# config/initializers/solidus_tracking.rb
+
+SolidusTracking::Event::CancelledOrder.customer_properties_serializer = 'MyApp::Serializers::CustomerProperties'
+SolidusTracking::Event::CancelledOrder.payload_serializer = 'MyApp::Serializers::Order'
+```
+
+If need to change the customer properties serializer for _all_ your events (which will usually be
+the case), you can loop through the `.events` setting:
+
+```ruby
+# config/initializers/solidus_tracking.rb
+
+SolidusTracking.configuration.events.each_value do |event_klass|
+  event_klass.customer_properties_serializer = 'MyApp::Serializers::CustomerProperties'
+end
+```
+
+Make sure to do this _after_ defining any custom events!
 
 ### Delivering emails through a tracker
 

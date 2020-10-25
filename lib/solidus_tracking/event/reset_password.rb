@@ -3,6 +3,8 @@
 module SolidusTracking
   module Event
     class ResetPassword < Base
+      self.payload_serializer = '::SolidusTracking::Serializer::User'
+
       def name
         'Reset Password'
       end
@@ -10,11 +12,11 @@ module SolidusTracking
       delegate :email, to: :user
 
       def customer_properties
-        Serializer::CustomerProperties.serialize(user)
+        self.class.customer_properties_serializer.serialize(user)
       end
 
       def properties
-        Serializer::User.serialize(user).merge(
+        self.class.payload_serializer.serialize(user).merge(
           '$event_id' => "#{user.id}-#{user.reset_password_sent_at.to_i}",
           'PasswordResetToken' => token,
           'PasswordResetURL' => password_reset_url,
