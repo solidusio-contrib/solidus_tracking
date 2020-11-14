@@ -14,21 +14,21 @@ module SolidusTracking
         private
 
         def track_started_checkout
-          SolidusTracking.track_later('started_checkout', order: self)
+          SolidusTracking.automatic_track_later('started_checkout', order: self)
         end
 
         def track_ordered_product
           line_items.each do |line_item|
-            SolidusTracking.track_later('ordered_product', line_item: line_item)
+            SolidusTracking.automatic_track_later('ordered_product', line_item: line_item)
           end
         end
 
         def track_placed_order
-          SolidusTracking.track_later('placed_order', order: self)
+          SolidusTracking.automatic_track_later('placed_order', order: self)
         end
 
         def track_cancelled_order
-          SolidusTracking.track_later('cancelled_order', order: self)
+          SolidusTracking.automatic_track_later('cancelled_order', order: self)
         end
       end
     end

@@ -11,7 +11,7 @@ module SolidusTracking
         private
 
         def track_signup
-          SolidusTracking.track_later 'created_account', user: self
+          SolidusTracking.automatic_track_later 'created_account', user: self
         end
       end
     end

@@ -45,8 +45,11 @@ SolidusTracking.configure do |config|
   config.disable_builtin_emails = false
 
   # You can register custom events or override the defaults by manipulating the `events` hash.
-  # config.events['my_custom_event'] = MyApp::Events::MyCustomEvent
-  # config.events['placed_order'] = MyApp::Events::PlacedOrder
+  # config.events['my_custom_event'] = 'MyApp::Events::MyCustomEvent'
+  # config.events['placed_order'] = 'MyApp::Events::PlacedOrder'
+
+  # You can disable automatic tracking for any of the built-in events here.
+  # config.automatic_events.delete('placed_order')
 
   # In test mode, all calls to `#track_now` and `#subscribe_now` are recorded and their
   # responses are mocked.

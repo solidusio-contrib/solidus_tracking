@@ -57,6 +57,12 @@ module SolidusTracking
       SolidusTracking::TrackEventJob.perform_later(event_name, event_payload)
     end
 
+    def automatic_track_later(event_name, event_payload = {})
+      return unless configuration.automatic_events.include?(event_name)
+
+      track_later(event_name, event_payload)
+    end
+
     private
 
     def test_registry
