@@ -6,7 +6,7 @@ module SolidusTracking
       module TrackPasswordReset
         def send_reset_password_instructions
           token = super
-          SolidusTracking.track_later('reset_password', user: self, token: token)
+          SolidusTracking.automatic_track_later('reset_password', user: self, token: token)
           token
         end
       end

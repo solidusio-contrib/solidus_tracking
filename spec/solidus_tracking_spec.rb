@@ -75,4 +75,47 @@ RSpec.describe SolidusTracking do
       end
     end
   end
+
+  describe '.automatic_track_later' do
+    context 'when the event is configured to be tracked automatically' do
+      context 'when the event is registered' do
+        it 'enqueues a TrackEventJob' do
+          allow(described_class.configuration).to receive(:automatic_events)
+            .and_return(%w[custom_event])
+          allow(described_class.configuration).to receive(:event_klass!).with('custom_event')
+
+          described_class.automatic_track_later('custom_event', foo: 'bar')
+
+          expect(SolidusTracking::TrackEventJob).to have_been_enqueued.with(
+            'custom_event',
+            foo: 'bar',
+          )
+        end
+      end
+
+      context 'when the event is not registered' do
+        it 'bubbles up any errors' do
+          allow(described_class.configuration).to receive(:automatic_events)
+            .and_return(%w[custom_event])
+          allow(described_class.configuration).to receive(:event_klass!)
+            .with('custom_event')
+            .and_raise(SolidusTracking::UnregisteredEventError.new('custom_event'))
+
+          expect {
+            described_class.automatic_track_later('custom_event', foo: 'bar')
+          }.to raise_error(SolidusTracking::UnregisteredEventError, /custom_event/)
+        end
+      end
+    end
+
+    context 'when the event is not configured to be tracked automatically' do
+      it 'does not enqueue a TrackEventJob' do
+        allow(described_class.configuration).to receive(:event_klass!).with('custom_event')
+
+        described_class.automatic_track_later('custom_event', foo: 'bar')
+
+        expect(SolidusTracking::TrackEventJob).not_to have_been_enqueued
+      end
+    end
+  end
 end

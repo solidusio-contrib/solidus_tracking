@@ -147,7 +147,7 @@ the case), you can loop through the `.events` setting:
 # config/initializers/solidus_tracking.rb
 
 SolidusTracking.configuration.events.each_value do |event_klass|
-  event_klass.customer_properties_serializer = 'MyApp::Serializers::CustomerProperties'
+  event_klass.constantize.customer_properties_serializer = 'MyApp::Serializers::CustomerProperties'
 end
 ```
 
@@ -175,6 +175,28 @@ This will disable the following emails:
 - Carton shipped
 
 You'll have to re-implement the emails with a tracker.
+
+### Disabling automatic event tracking
+
+If you want to disable the out-of-the-box event tracking, you can do so on a per-event basis by
+acting on the `automatic_events` configuration option:
+
+```ruby
+# config/initializers/solidus_tracking.rb
+SolidusTracking.configure do |config|
+  config.automatic_events.delete('placed_order')
+end
+```
+
+You may also disable the built-in event tracking completely, if you only want to track events
+manually:
+
+```ruby
+# config/initializers/solidus_tracking.rb
+SolidusTracking.configure do |config|
+  config.automatic_events.clear
+end
+```
 
 ### Test mode
 

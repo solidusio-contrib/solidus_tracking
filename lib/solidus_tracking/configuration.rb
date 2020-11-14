@@ -2,6 +2,16 @@
 
 module SolidusTracking
   class Configuration
+    BUILT_IN_EVENTS = {
+      'ordered_product' => 'SolidusTracking::Event::OrderedProduct',
+      'placed_order' => 'SolidusTracking::Event::PlacedOrder',
+      'started_checkout' => 'SolidusTracking::Event::StartedCheckout',
+      'cancelled_order' => 'SolidusTracking::Event::CancelledOrder',
+      'reset_password' => 'SolidusTracking::Event::ResetPassword',
+      'created_account' => 'SolidusTracking::Event::CreatedAccount',
+      'fulfilled_order' => 'SolidusTracking::Event::FulfilledOrder',
+    }.freeze
+
     attr_accessor(
       :variant_url_builder, :image_url_builder, :password_reset_url_builder, :order_url_builder,
       :disable_builtin_emails, :test_mode,
@@ -16,19 +26,16 @@ module SolidusTracking
     end
 
     def events
-      @events ||= {
-        'ordered_product' => SolidusTracking::Event::OrderedProduct,
-        'placed_order' => SolidusTracking::Event::PlacedOrder,
-        'started_checkout' => SolidusTracking::Event::StartedCheckout,
-        'cancelled_order' => SolidusTracking::Event::CancelledOrder,
-        'reset_password' => SolidusTracking::Event::ResetPassword,
-        'created_account' => SolidusTracking::Event::CreatedAccount,
-        'fulfilled_order' => SolidusTracking::Event::FulfilledOrder,
-      }
+      @events ||= BUILT_IN_EVENTS.dup
+    end
+
+    def automatic_events
+      @automatic_events ||= BUILT_IN_EVENTS.keys
     end
 
     def event_klass(name)
-      events[name.to_s]
+      klass = events[name.to_s]
+      klass.is_a?(String) ? klass.constantize : klass
     end
 
     def event_klass!(name)

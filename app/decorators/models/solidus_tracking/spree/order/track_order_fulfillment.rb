@@ -13,7 +13,7 @@ module SolidusTracking
         def track_fulfilled_order
           return unless previous_changes.key?('shipment_state') && shipment_state == 'shipped'
 
-          SolidusTracking.track_later('fulfilled_order', order: self)
+          SolidusTracking.automatic_track_later('fulfilled_order', order: self)
         end
       end
     end
