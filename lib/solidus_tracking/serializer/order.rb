@@ -14,7 +14,7 @@ module SolidusTracking
             line_item.variant.product.taxons.flat_map(&:self_and_ancestors)
           end).uniq.map(&:name),
           'ItemNames' => order.line_items.map { |line_item| line_item.variant.descriptive_name },
-          'DiscountCode' => order.order_promotions.map { |op| op.promotion_code.value }.join(', '),
+          'DiscountCode' => order.adjustments.promotion.eligible.map { |op| op.promotion_code ? op.promotion_code.value : "all orders" }.join(', '),
           'DiscountValue' => order.promo_total,
           'Items' => order.line_items.map { |line_item| LineItem.serialize(line_item) },
           'BillingAddress' => Address.serialize(order.bill_address),
