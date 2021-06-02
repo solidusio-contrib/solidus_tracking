@@ -14,7 +14,7 @@ RSpec.describe SolidusTracking::Serializer::Order do
 
       promotion.activate(order: order)
 
-      expect(described_class.serialize(order)).to include({"DiscountCode" => "all orders"})
+      expect(described_class.serialize(order)).to include({ "DiscountCode" => "all orders" })
     end
 
     it 'does not include ineligible discount codes' do
