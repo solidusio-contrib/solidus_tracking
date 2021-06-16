@@ -18,9 +18,7 @@ require 'solidus_dev_support/rspec/feature_helper'
 # in spec/support/ and its subdirectories.
 Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
-# Will load Solidus core factory first and then the ones
-# defined in `lib/solidus_tracking/testing_support/factories.rb`.
-# and `lib/solidus_tracking/testing_support/factories`.
+# Requires factories defined in lib/solidus_tracking/testing_support/factories.rb
 SolidusDevSupport::TestingSupport::Factories.load_for(SolidusTracking::Engine)
 
 RSpec.configure do |config|

@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require 'solidus_core'
-require 'solidus_support'
-
+require 'solidus_tracking/configuration'
 require 'solidus_tracking/version'
 require 'solidus_tracking/engine'
-require 'solidus_tracking/configuration'
+
 require 'solidus_tracking/serializer/base'
 require 'solidus_tracking/serializer/address'
 require 'solidus_tracking/serializer/order'
