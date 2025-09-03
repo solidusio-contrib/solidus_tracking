@@ -1,21 +1,23 @@
 version: 2.1
 
 orbs:
-  # Always take the latest version of the orb, this allows us to
-  # run specs against Solidus supported versions only without the need
-  # to change this configuration every time a Solidus version is released
-  # or goes EOL.
-  solidusio_extensions: solidusio/extensions@volatile
+  solidusio_extensions: solidusio/extensions@0.15.0
 
 jobs:
   run-specs-with-postgres:
-    executor: solidusio_extensions/postgres
+    executor:
+      name: solidusio_extensions/postgres
+      ruby_version: "3.1"
     steps:
-      - solidusio_extensions/run-tests
+      - checkout
+      - solidusio_extensions/run-tests-solidus-older
   run-specs-with-mysql:
-    executor: solidusio_extensions/mysql
+    executor:
+      name: solidusio_extensions/mysql
+      ruby_version: "3.1"
     steps:
-      - solidusio_extensions/run-tests
+      - checkout
+      - solidusio_extensions/run-tests-solidus-older
   lint-code:
     executor: solidusio_extensions/sqlite-memory
     steps:
