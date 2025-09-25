@@ -49,7 +49,8 @@ RSpec.describe SolidusTracking::Event::FulfilledOrder do
     end
 
     it 'includes an event ID and value' do
-      order = build_stubbed(:order)
+      order = build(:order)
+
       allow(SolidusTracking::Serializer::LineItem).to receive(:serialize)
         .with(order)
         .and_return('foo' => 'bar')

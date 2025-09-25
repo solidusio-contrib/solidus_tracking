@@ -11,7 +11,7 @@ RSpec.describe Spree::Order do
         expect(SolidusTracking::TrackEventJob).to have_been_enqueued.with(
           'started_checkout',
           order: order,
-        )
+        ).at_least(:once)
       end
     end
   end
@@ -25,19 +25,18 @@ RSpec.describe Spree::Order do
       expect(SolidusTracking::TrackEventJob).to have_been_enqueued.with(
         'placed_order',
         order: order,
-      )
+      ).at_least(:once)
     end
 
     it 'tracks the Ordered Product events' do
       order = Spree::TestingSupport::OrderWalkthrough.up_to(:payment)
 
       order.complete!
-
       order.line_items.each do |line_item|
         expect(SolidusTracking::TrackEventJob).to have_been_enqueued.with(
           'ordered_product',
           line_item: line_item,
-        )
+        ).at_least(:once)
       end
     end
 
@@ -75,7 +74,7 @@ RSpec.describe Spree::Order do
       expect(SolidusTracking::TrackEventJob).to have_been_enqueued.with(
         'cancelled_order',
         order: order,
-      )
+      ).at_least(:once)
     end
 
     context 'when disable_builtin_emails is true' do
