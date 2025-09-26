@@ -9,18 +9,20 @@ gem 'solidus', github: "solidusio/solidus", tag: solidus_version
 # Needed to help Bundler figure out how to resolve dependencies,
 # otherwise it takes forever to resolve them.
 # See https://github.com/bundler/bundler/issues/6677
-gem 'rails', '>0.a'
+gem "rails", ">0.a"
 
 # Provides basic authentication functionality for testing parts of your engine
-gem 'solidus_auth_devise'
+gem "solidus_auth_devise"
 
-case ENV['DB']
-when 'mysql'
-  gem 'mysql2'
-when 'postgresql'
-  gem 'pg'
+gem 'concurrent-ruby', '1.3.4'
+
+case ENV["DB"]
+when "mysql"
+  gem "mysql2"
+when "postgresql"
+  gem "pg"
 else
-  gem 'sqlite3', '~> 1.4'
+  gem "sqlite3", "~> 1.4"
 end
 
 gemspec
