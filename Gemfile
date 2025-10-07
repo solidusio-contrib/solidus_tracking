@@ -15,6 +15,7 @@ gem "rails", ">0.a"
 gem "solidus_auth_devise"
 
 gem 'concurrent-ruby', '1.3.4'
+gem 'state_machines', '0.6.0'
 
 case ENV["DB"]
 when "mysql"
