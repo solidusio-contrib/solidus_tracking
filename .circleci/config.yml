@@ -10,7 +10,6 @@ jobs:
       ruby_version: "3.1"
     steps:
       - checkout
-      - dependencies
       - solidusio_extensions/run-tests-solidus-older
   run-specs-with-mysql:
     executor:
@@ -18,7 +17,6 @@ jobs:
       ruby_version: "3.1"
     steps:
       - checkout
-      - dependencies
       - solidusio_extensions/run-tests-solidus-older
   lint-code:
     executor: solidusio_extensions/sqlite-memory

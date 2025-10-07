@@ -3,8 +3,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-solidus_version = ENV.fetch('SOLIDUS_VERSION', 'v4.5.1')
-gem 'solidus', github: "solidusio/solidus", tag: solidus_version
+solidus_branch = ENV.fetch('SOLIDUS_BRANCH', 'v4.5')
+gem 'solidus', github: "solidusio/solidus", branch: solidus_branch
 
 # Needed to help Bundler figure out how to resolve dependencies,
 # otherwise it takes forever to resolve them.
