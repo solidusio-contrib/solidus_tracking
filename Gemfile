@@ -20,6 +20,13 @@ gem 'rails', '>0.a'
 # Provides basic authentication functionality for testing parts of your engine
 gem 'solidus_auth_devise'
 
+# Standard library gems that became separate in Ruby 3.4+
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
+gem 'csv'
+gem 'ostruct'
+
 case ENV['DB']
 when 'mysql'
   gem 'mysql2'
