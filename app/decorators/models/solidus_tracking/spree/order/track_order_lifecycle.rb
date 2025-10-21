@@ -4,11 +4,13 @@ module SolidusTracking
   module Spree
     module Order
       module TrackOrderLifecycle
-        def self.prepended(base)
-          base.state_machine.after_transition to: :address, do: :track_started_checkout
-          base.state_machine.after_transition to: :complete, do: :track_ordered_product
-          base.state_machine.after_transition to: :complete, do: :track_placed_order
-          base.state_machine.after_transition to: :canceled, do: :track_cancelled_order
+        extend ActiveSupport::Concern
+
+        prepended do
+          state_machine.after_transition to: :address, do: :track_started_checkout
+          state_machine.after_transition to: :complete, do: :track_ordered_product
+          state_machine.after_transition to: :complete, do: :track_placed_order
+          state_machine.after_transition to: :canceled, do: :track_cancelled_order
         end
 
         private
