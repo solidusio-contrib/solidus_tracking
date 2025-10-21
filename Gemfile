@@ -27,6 +27,9 @@ gem 'drb'
 gem 'csv'
 gem 'ostruct'
 
+# This is locked due to a 'stack level too deep' error/bug in v0.1.0.
+gem 'state_machines', '~> 0.6.0'
+
 case ENV['DB']
 when 'mysql'
   gem 'mysql2'
