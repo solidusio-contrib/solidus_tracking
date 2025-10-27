@@ -3,8 +3,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
-solidus_git, solidus_frontend_git = if (branch == 'master') || (branch >= 'v3.2')
+branch = ENV.fetch('SOLIDUS_BRANCH', 'v3.4')
+solidus_git, solidus_frontend_git = if (branch == 'main') || (branch == 'master') || (branch >= 'v3.2')
                                       %w[solidusio/solidus solidusio/solidus_frontend]
                                     else
                                       %w[solidusio/solidus] * 2
@@ -20,13 +20,25 @@ gem 'rails', '>0.a'
 # Provides basic authentication functionality for testing parts of your engine
 gem 'solidus_auth_devise'
 
+# Standard library gems that became separate in Ruby 3.4+
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
+gem 'csv'
+gem 'ostruct'
+
+# This is locked due to a 'stack level too deep' error/bug in v0.1.0.
+gem 'state_machines', '~> 0.6.0'
+
+gem 'concurrent-ruby', '1.3.4'
+
 case ENV['DB']
 when 'mysql'
   gem 'mysql2'
 when 'postgresql'
   gem 'pg'
 else
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.4'
 end
 
 gemspec

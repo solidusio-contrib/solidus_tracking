@@ -4,8 +4,10 @@ module SolidusTracking
   module Spree
     module Order
       module TrackOrderFulfillment
-        def self.prepended(base)
-          base.after_update :track_fulfilled_order
+        extend ActiveSupport::Concern
+
+        prepended do
+          after_update :track_fulfilled_order
         end
 
         private

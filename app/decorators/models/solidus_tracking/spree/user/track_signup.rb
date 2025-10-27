@@ -4,8 +4,10 @@ module SolidusTracking
   module Spree
     module User
       module TrackSignup
-        def self.prepended(base)
-          base.after_commit :track_signup, on: :create
+        extend ActiveSupport::Concern
+
+        prepended do
+          after_commit :track_signup, on: :create
         end
 
         private
