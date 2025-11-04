@@ -1,6 +1,6 @@
 # solidus_tracking
 
-[![CircleCI](https://circleci.com/gh/solidusio-contrib/solidus_tracking.svg?style=svg)](https://circleci.com/gh/solidusio-contrib/solidus_tracking)
+[![Test](https://github.com/solidusio-contrib/solidus_tracking/actions/workflows/test.yml/badge.svg)](https://github.com/solidusio-contrib/solidus_tracking/actions/workflows/test.yml)
 
 This extension provides a data tracking platform (think [Segment](https://segment.com), but
 on-premise) for your Solidus store.
