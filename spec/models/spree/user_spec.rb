@@ -12,7 +12,14 @@ RSpec.describe Spree::User do
     end
   end
 
+
   describe '#send_reset_password_instructions' do
+    before do
+      allow(Devise.mailer)
+        .to receive(:reset_password_instructions)
+        .and_return(double(deliver_now: true))
+    end
+
     it 'tracks the Requested Password Reset event' do
       create(:store)
       user = create(:user)
